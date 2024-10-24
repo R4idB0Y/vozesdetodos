@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz de Derechos Humanos</title>
+  <style>
+    body {
+      background: url('theme.gif') no-repeat center center fixed;
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      text-align: center;
+    }
+
+    .container {
+      background: linear-gradient(145deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7));
+      padding: 40px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 800px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: visible;
+    }
+
+    h1 {
+      font-size: 3em;
+      color: #fff;
+      text-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+      margin-bottom: 30px;
+    }
+
+    .question {
+      font-size: 1.4em;
+      margin-bottom: 20px;
+    }
+
+    .option {
+      display: block;
+      background: linear-gradient(145deg, #2a9d8f, #264653);
+      border: none;
+      color: #fff;
+      padding: 15px;
+      font-size: 1.2em;
+      border-radius: 12px;
+      cursor: pointer;
+      text-decoration: none;
+      margin: 10px 0;
+      transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .option:hover {
+      background: linear-gradient(145deg, #264653, #2a9d8f);
+      transform: scale(1.03);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+    }
+
+    .feedback {
+      font-size: 1.2em;
+      margin-top: 20px;
+    }
+
+    .next-button, .finish-button {
+      background: linear-gradient(145deg, #e76f51, #d62839);
+      border: none;
+      color: #fff;
+      padding: 12px 24px;
+      font-size: 1.2em;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .next-button:hover, .finish-button:hover {
+      background: linear-gradient(145deg, #d62839, #e76f51);
+      transform: scale(1.03);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+    }
+
+    .finish-button {
+      display: none;
+    }
+
+    .result {
+      font-size: 1.2em;
+      margin-top: 20px;
+    }
+
+    .language-button, .cego-button, .menu-button {
+      position: fixed;
+      background: #fff;
+      color: #264653;
+      padding: 10px 20px;
+      font-size: 1em;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .language-button {
+      bottom: 20px;
+      right: 20px;
+    }
+
+    .cego-button {
+      bottom: 20px;
+      left: 20px;
+    }
+
+    .menu-button {
+      top: 20px;
+      right: 20px;
+    }
+
+    .language-button:hover, .cego-button:hover, .menu-button:hover {
+      background: #f0f0f0;
+      transform: scale(1.1);
+    }
+
+    .gif-container {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      z-index: 10;
+    }
+
+    .gif-container img {
+      width: 90px;
+      height: 80px;
+      background: transparent;
+    }
+  </style>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap">
+</head>
+<body>
+  <div class="container">
+    <h1>Quiz de Derechos Humanos</h1>
+    <div id="quiz"></div>
+    <div id="feedback" class="feedback"></div>
+    <button id="next-button" class="next-button" style="display:none;">Siguiente Pregunta</button>
+    <button id="finish-button" class="finish-button">Ver Resultados</button>
+    <div id="result" class="result"></div>
+
+    <div class="gif-container">
+      <img src="sonic.gif" alt="GIF" />
+    </div>
+  </div>
+
+  <a href="direitos.html" class="language-button">🇧🇷</a>
+  <a href="cegoDES.html" class="cego-button" aria-label="Botão de acessibilidade para deficientes visuais">Modo Ciego</a>
+  <a href="index.html" class="menu-button">Menu</a>
+
+  <audio id="correct-sound" src="ring.mp3"></audio>
+  <audio id="victory-sound" src="victory.mp3"></audio>
+  <audio id="over-sound" src="over.mp3"></audio>
+  <audio id="error-sound" src="erro.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        question: "¿Cuál es un ejemplo de violación de los derechos humanos?",
+        options: [
+          "A) Censura a la prensa", // Resposta correta
+          "B) Libertad de expresión",
+          "C) Derecho a la educación",
+          "D) Derecho al trabajo"
+        ],
+        answer: "A) Censura a la prensa",
+        audio: "dt1.mp3"
+      },
+      {
+        question: "¿Cuál es el principal documento que protege los derechos humanos en el mundo?",
+        options: [
+          "A) La Carta Magna",
+          "B) La Constitución Federal",
+          "C) La Declaración Universal de los Derechos Humanos", // Resposta correta
+          "D) El Código Civil"
+        ],
+        answer: "C) La Declaración Universal de los Derechos Humanos",
+        audio: "dt2.mp3"
+      },
+      {
+        question: "¿Cuál es un derecho humano fundamental?",
+        options: [
+          "A) Derecho a la educación", // Resposta correta
+          "B) Derecho a tener un coche",
+          "C) Derecho a vacaciones",
+          "D) Derecho a tener una casa"
+        ],
+        answer: "A) Derecho a la educación",
+        audio: "dt3.mp3"
+      },
+      {
+        question: "¿Todos tienen derecho a la libertad de expresión?",
+        options: [
+          "A) No",
+          "B) Sí", // Resposta correta
+          "C) Solo ciudadanos",
+          "D) Solo periodistas"
+        ],
+        answer: "B) Sí",
+        audio: "dt4.mp3"
+      },
+      {
+        question: "¿Los derechos humanos son universales?",
+        options: [
+          "A) Sí", // Resposta correta
+          "B) No",
+          "C) Solo en Europa",
+          "D) Solo en América"
+        ],
+        answer: "A) Sí",
+        audio: "dt5.mp3"
+      }
+    ];
+
+    let currentQuestionIndex = 0;
+    let correctAnswers = 0;
+    let incorrectAnswers = 0;
+
+    function loadQuestion() {
+      const question = questions[currentQuestionIndex];
+      const quizContainer = document.getElementById('quiz');
+      const feedbackContainer = document.getElementById('feedback');
+      const nextButton = document.getElementById('next-button');
+      const finishButton = document.getElementById('finish-button');
+
+      feedbackContainer.textContent = '';
+
+      quizContainer.innerHTML = `
+        <div class="question">${question.question}</div>
+        <button onclick="playAudio('${question.audio}')">🔊</button>
+        ${question.options.map((option) => `
+          <a href="#" class="option" data-answer="${option.slice(3)}">${option}</a>
+        `).join('')}
+      `;
+
+      const optionElements = document.querySelectorAll('.option');
+      optionElements.forEach(option => {
+        option.addEventListener('click', function(event) {
+          event.preventDefault();
+          const selectedAnswer = this.dataset.answer;
+          if (selectedAnswer === question.answer.slice(3)) {
+            correctAnswers++;
+            document.getElementById('correct-sound').play();
+            feedbackContainer.textContent = '¡Correcto!';
+          } else {
+            incorrectAnswers++;
+            document.getElementById('error-sound').play();
+            feedbackContainer.textContent = '¡Incorrecto! La respuesta correcta es: ' + question.answer;
+          }
+          nextButton.style.display = 'block';
+          optionElements.forEach(opt => opt.style.pointerEvents = 'none');
+
+          if (currentQuestionIndex >= questions.length - 1) {
+            nextButton.style.display = 'none';
+            finishButton.style.display = 'block';
+            if (correctAnswers === questions.length) {
+              document.getElementById('victory-sound').play();
+            } else {
+              document.getElementById('over-sound').play();
+            }
+          }
+        });
+      });
+    }
+
+    function playAudio(audioFile) {
+      const audio = new Audio(audioFile);
+      audio.play();
+    }
+
+    document.getElementById('next-button').addEventListener('click', function() {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion();
+        this.style.display = 'none';
+      }
+    });
+
+    document.getElementById('finish-button').addEventListener('click', function() {
+      const resultContainer = document.getElementById('result');
+      resultContainer.innerHTML = `
+        Has acertado ${correctAnswers} de ${questions.length} preguntas.<br>
+        ${incorrectAnswers > 0 ? `Has fallado ${incorrectAnswers} preguntas.` : ''}
+      `;
+      this.style.display = 'none';
+    });
+
+    loadQuestion(); // Cargar la primera pregunta
+  </script>
+</body>
+</html>

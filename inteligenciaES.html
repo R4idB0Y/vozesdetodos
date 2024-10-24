@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz de Inteligencia Artificial</title>
+  <style>
+    body {
+      background-image: url('https://media1.tenor.com/m/lN7OvgMccHUAAAAC/sonic-sonic-the-hedgehog.gif');
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      text-align: center;
+    }
+
+    .container {
+      background: linear-gradient(145deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7));
+      padding: 40px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 800px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: visible;
+    }
+
+    h1 {
+      font-size: 3em;
+      color: #fff;
+      text-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+      margin-bottom: 30px;
+    }
+
+    .question {
+      font-size: 1.4em;
+      margin-bottom: 20px;
+    }
+
+    .option {
+      display: block;
+      background: linear-gradient(145deg, #2a9d8f, #264653);
+      border: none;
+      color: #fff;
+      padding: 15px;
+      font-size: 1.2em;
+      border-radius: 12px;
+      cursor: pointer;
+      text-decoration: none;
+      margin: 10px 0;
+      transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .option:hover {
+      background: linear-gradient(145deg, #264653, #2a9d8f);
+      transform: scale(1.03);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+    }
+
+    .feedback {
+      font-size: 1.2em;
+      margin-top: 20px;
+    }
+
+    .next-button {
+      background: linear-gradient(145deg, #e76f51, #d62839);
+      border: none;
+      color: #fff;
+      padding: 12px 24px;
+      font-size: 1.2em;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .next-button:hover {
+      background: linear-gradient(145deg, #d62839, #e76f51);
+      transform: scale(1.03);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+    }
+
+    .result {
+      font-size: 1.2em;
+      margin-top: 20px;
+    }
+
+    .language-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #fff;
+      color: #264653;
+      padding: 10px 20px;
+      font-size: 1em;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      text-decoration: none;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .menu-button {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #fff;
+      color: #264653;
+      padding: 10px 20px;
+      font-size: 1em;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .language-button:hover {
+      background: #f0f0f0;
+      transform: scale(1.1);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+    }
+
+    .cego-button {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: #fff;
+      color: #264653;
+      padding: 10px 20px;
+      font-size: 1em;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .gif-container {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      z-index: 10;
+    }
+
+    .gif-container img {
+      width: 90px;
+      height: 80px;
+      background: transparent;
+    }
+
+  </style>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap">
+</head>
+<body>
+  <div class="container">
+    <h1>Quiz de Inteligencia Artificial</h1>
+    <div id="quiz"></div>
+    <div id="feedback" class="feedback"></div>
+    <button id="next-button" class="next-button" style="display:none;">Siguiente Pregunta</button>
+    <div id="result" class="result"></div>
+
+    <div class="gif-container">
+      <img src="sonic.gif" alt="GIF" />
+    </div>
+  </div>
+
+  <a href="inteligencia.html" class="language-button">🇧🇷</a>
+  <a href="cegoES.html" class="cego-button" aria-label="Botão de acessibilidade para deficientes visuais">Modo Ciego</a>
+  <a href="index.html" class="menu-button">Menu</a>
+
+  <audio id="correct-sound" src="ring.mp3"></audio>
+  <audio id="victory-sound" src="victory.mp3"></audio> <!-- Sonido de victoria -->
+  <audio id="over-sound" src="over.mp3"></audio> <!-- Sonido de "over" -->
+  <audio id="error-sound" src="erro.mp3"></audio> <!-- Sonido de error -->
+
+  <script>
+    const questions = [
+      {
+        question: "¿Cuál es el objetivo principal de la Inteligencia Artificial?",
+        options: [
+          "Imitar la inteligencia humana",
+          "Sustituir completamente a los humanos",
+          "Crear computadoras más rápidas",
+          "Almacenar más datos"
+        ],
+        answer: "Imitar la inteligencia humana"
+      },
+      {
+        question: "¿Cuál de las siguientes áreas es una aplicación común de IA?",
+        options: [
+          "Reconocimiento de voz",
+          "Reproducción de video",
+          "Almacenamiento de datos",
+          "Conexión a Internet"
+        ],
+        answer: "Reconocimiento de voz"
+      },
+      {
+        question: "¿Cuál es un ejemplo de aprendizaje automático?",
+        options: [
+          "Algoritmos de búsqueda",
+          "Redes neuronales",
+          "Sistemas de gestión de bases de datos",
+          "Desarrollo de software"
+        ],
+        answer: "Redes neuronales"
+      },
+      {
+        question: "¿Qué es una red neuronal artificial?",
+        options: [
+          "Un software de edición de imágenes",
+          "Un sistema que simula el funcionamiento del cerebro humano",
+          "Una herramienta de búsqueda en la web",
+          "Un dispositivo de almacenamiento de datos"
+        ],
+        answer: "Un sistema que simula el funcionamiento del cerebro humano"
+      },
+      {
+        question: "¿Qué técnica de IA se utiliza para predecir comportamientos futuros basados en datos históricos?",
+        options: [
+          "Aprendizaje supervisado",
+          "Aprendizaje no supervisado",
+          "Algoritmos genéticos",
+          "Redes neuronales convolucionales"
+        ],
+        answer: "Aprendizaje supervisado"
+      }
+    ];
+
+    let currentQuestionIndex = 0;
+    let correctAnswers = 0;
+    let incorrectAnswers = 0;
+
+    function loadQuestion() {
+      const question = questions[currentQuestionIndex];
+      const quizContainer = document.getElementById('quiz');
+      const feedbackContainer = document.getElementById('feedback');
+      const nextButton = document.getElementById('next-button');
+
+      feedbackContainer.textContent = '';
+
+      quizContainer.innerHTML = `
+        <div class="question">${question.question}</div>
+        ${question.options.map((option, index) => `
+          <a href="#" class="option" data-answer="${option}">${option}</a>
+        `).join('')}
+      `;
+
+      const optionElements = document.querySelectorAll('.option');
+      optionElements.forEach(option => {
+        option.addEventListener('click', function(event) {
+          event.preventDefault();
+          const selectedAnswer = this.dataset.answer;
+          if (selectedAnswer === question.answer) {
+            correctAnswers++;
+            document.getElementById('correct-sound').play();
+            feedbackContainer.textContent = '¡Correcto!';
+          } else {
+            incorrectAnswers++;
+            document.getElementById('error-sound').play(); // Toca el sonido de error
+            feedbackContainer.textContent = '¡Incorrecto! La respuesta correcta es: ' + question.answer;
+          }
+          nextButton.style.display = 'block';
+          optionElements.forEach(opt => opt.classList.add('disabled'));
+          this.classList.add('selected');
+        });
+      });
+
+      if (currentQuestionIndex === questions.length - 1) {
+        nextButton.style.display = 'none';
+      }
+    }
+
+    document.getElementById('next-button').addEventListener('click', function() {
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) {
+        loadQuestion();
+      } else {
+        // Mostrar resultados automáticamente
+        showResults();
+      }
+    });
+
+    function showResults() {
+      document.getElementById('quiz').style.display = 'none';
+      const resultContainer = document.getElementById('result');
+      resultContainer.innerHTML = `
+        <h2>Resultados</h2>
+        <p>Respuestas correctas: ${correctAnswers}</p>
+        <p>Respuestas incorrectas: ${incorrectAnswers}</p>
+      `;
+      
+      // Tocar sonido de victoria o "over"
+      if (correctAnswers >= 5) {
+        document.getElementById('victory-sound').play();
+      } else {
+        document.getElementById('over-sound').play();
+      }
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>

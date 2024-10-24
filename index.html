@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vozes de Todos</title>
+  <style>
+    body {
+      background: url('wallpaper.gif') no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Luckiest Guy', cursive;
+      color: #f9f9f9;
+      overflow: hidden;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    body.fade-out {
+      opacity: 0;
+    }
+
+    h1 {
+      font-size: 4em;
+      color: #e1e1e1;
+      text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.6);
+      margin: 0;
+      padding: 20px 40px;
+      background: rgba(0, 0, 0, 0.7);
+      border: 4px solid #ffffff;
+      border-radius: 15px;
+      position: relative;
+      top: -10%;
+      animation: bounce 1s ease-out;
+    }
+
+    .banner-container {
+      position: absolute;
+      left: 180px; /* Ajuste a posição horizontal */
+      top: 80px; /* Ajuste a posição vertical */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: fade-in 1s ease-in; /* Animação de entrada */
+    }
+
+    .banner-container h2 {
+      font-size: 4em; /* Aumenta o tamanho do texto */
+      color: #ffffff;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+      margin: 0 0 10px 0;
+      animation: subtle-move 2s ease-in-out forwards; /* Animação sutil */
+    }
+
+    img {
+      width: 200px; /* Aumenta o tamanho do QR Code */
+      height: 200px; /* Aumenta o tamanho do QR Code */
+    }
+
+    @keyframes subtle-move {
+      0% {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      50% {
+        opacity: 0.5;
+        transform: translateY(5px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .button-container {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      margin-top: 30px;
+      animation: fade-in 2s ease-out;
+    }
+
+    .button {
+      background: #3d9ff0;
+      border: 4px solid #3d9ff0;
+      color: #d6d6d6;
+      padding: 20px 40px;
+      font-size: 1.5em;
+      border-radius: 20px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.5s, transform 0.5s, box-shadow 0.5s;
+      display: inline-block;
+      text-align: center;
+      box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.8), inset 0px 0px 10px rgba(255, 215, 0, 0.5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .button::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 300%;
+      height: 300%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.3) 60%);
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      opacity: 0.3;
+      transition: opacity 0.3s;
+    }
+
+    .button:hover::before {
+      opacity: 0.6;
+    }
+
+    .button:hover {
+      background: #3d9ff0;
+      color: #fff;
+      transform: scale(1.1);
+      box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.9), inset 0px 0px 15px rgba(255, 215, 0, 0.7);
+    }
+
+    .button:focus {
+      outline: none;
+    }
+
+    @keyframes bounce {
+      0% { transform: translateY(-50px); }
+      50% { transform: translateY(10px); }
+      100% { transform: translateY(0); }
+    }
+
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    .footer {
+      position: absolute;
+      bottom: 20px;
+      text-align: center;
+      font-size: 1.0em; 
+      color: #ffffff;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+      margin-top: 10px; 
+    }
+  </style>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap">
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const links = document.querySelectorAll('a.button');
+      links.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          document.body.classList.add('fade-out');
+          setTimeout(() => {
+            window.location.href = this.href;
+          }, 500);
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+  <h1>Vozes de Todos</h1>
+  <div class="banner-container">
+    <h2>Nosso Banner</h2>
+    <img src="qrcode.png" alt="QR Code">
+  </div>
+  <div class="button-container">
+    <a href="direitos.html" class="button">Direitos Humanos</a>
+    <a href="inteligencia.html" class="button">Inteligência Artificial</a>
+  </div>
+  <div class="footer">
+    Desenvolvedores do jogo: Bruno e Gabriel<br>
+    Grupo: Bruno, Gabriel, Luan, Marcus, Miguel<br>
+    Turma: 11711
+  </div>
+</body>
+</html>

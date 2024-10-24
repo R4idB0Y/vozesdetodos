@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Human Rights Quiz</title>
+  <style>
+    body {
+      background: url('theme.gif') no-repeat center center fixed;
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      text-align: center;
+    }
+
+    .container {
+      background: linear-gradient(145deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7));
+      padding: 40px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 800px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: visible;
+    }
+
+    h1 {
+      font-size: 3em;
+      color: #fff;
+      text-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+      margin-bottom: 30px;
+    }
+
+    .question {
+      font-size: 1.4em;
+      margin-bottom: 20px;
+    }
+
+    .option {
+      display: block;
+      background: linear-gradient(145deg, #2a9d8f, #264653);
+      border: none;
+      color: #fff;
+      padding: 15px;
+      font-size: 1.2em;
+      border-radius: 12px;
+      cursor: pointer;
+      text-decoration: none;
+      margin: 10px 0;
+      transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .option:hover {
+      background: linear-gradient(145deg, #264653, #2a9d8f);
+      transform: scale(1.03);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+    }
+
+    .feedback {
+      font-size: 1.2em;
+      margin-top: 20px;
+    }
+
+    .next-button, .finish-button {
+      background: linear-gradient(145deg, #e76f51, #d62839);
+      border: none;
+      color: #fff;
+      padding: 12px 24px;
+      font-size: 1.2em;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .next-button:hover, .finish-button:hover {
+      background: linear-gradient(145deg, #d62839, #e76f51);
+      transform: scale(1.03);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+    }
+
+    .finish-button {
+      display: none;
+    }
+
+    .result {
+      font-size: 1.2em;
+      margin-top: 20px;
+    }
+
+    .language-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #fff;
+      color: #264653;
+      padding: 10px 20px;
+      font-size: 1em;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      text-decoration: none;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .language-button:hover {
+      background: #f0f0f0;
+      transform: scale(1.1);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+    }
+
+    .cego-button {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: #fff;
+      color: #264653;
+      padding: 10px 20px;
+      font-size: 1em;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .menu-button {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #fff;
+      color: #264653;
+      padding: 10px 20px;
+      font-size: 1em;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .flag-button {
+      position: fixed;
+      bottom: 70px; /* Adjust position as needed */
+      left: 20px;
+      background: #fff;
+      color: #264653;
+      padding: 10px 20px;
+      font-size: 1em;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      text-decoration: none;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .flag-button:hover {
+      background: #f0f0f0;
+      transform: scale(1.1);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+    }
+
+    .gif-container {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      z-index: 10;
+    }
+
+    .gif-container img {
+      width: 90px;
+      height: 80px;
+      background: transparent;
+    }
+
+  </style>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap">
+</head>
+<body>
+  <div class="container">
+    <h1>Human Rights Quiz</h1>
+    <div id="quiz"></div>
+    <div id="feedback" class="feedback"></div>
+    <button id="next-button" class="next-button" style="display:none;">Next Question</button>
+    <button id="finish-button" class="finish-button">See Results</button>
+    <div id="result" class="result"></div>
+
+    <div class="gif-container">
+      <img src="sonic.gif" alt="GIF" />
+    </div>
+  </div>
+
+  <a href="direitos.html" class="flag-button">🇧🇷</a>
+  <a href="direitoES.html" class="language-button">🇪🇸</a>
+  <a href="blind2.html" class="cego-button" aria-label="Accessibility button for visually impaired">Blind Mode</a>
+  <a href="index.html" class="menu-button">Menu</a>
+
+  <audio id="correct-sound" src="ring.mp3"></audio>
+  <audio id="victory-sound" src="victory.mp3"></audio>
+  <audio id="over-sound" src="over.mp3"></audio>
+  <audio id="error-sound" src="erro.mp3"></audio>
+
+  <script>
+    const questions = [
+      {
+        question: "What is an example of a human rights violation?",
+        options: [
+          "Censorship of the press",
+          "Freedom of expression",
+          "Right to education",
+          "Right to work"
+        ],
+        answer: "Censorship of the press"
+      },
+      {
+        question: "What is the main document that protects human rights worldwide?",
+        options: [
+          "The Magna Carta",
+          "The Federal Constitution",
+          "The Universal Declaration of Human Rights",
+          "The Civil Code"
+        ],
+        answer: "The Universal Declaration of Human Rights"
+      },
+      {
+        question: "What is a fundamental human right?",
+        options: [
+          "Right to education",
+          "Right to own a car",
+          "Right to vacation",
+          "Right to have a house"
+        ],
+        answer: "Right to education"
+      },
+      {
+        question: "Does everyone have the right to freedom of expression?",
+        options: [
+          "No",
+          "Yes",
+          "Only citizens",
+          "Only journalists"
+        ],
+        answer: "Yes"
+      },
+      {
+        question: "Are human rights applicable to all countries?",
+        options: [
+          "Only in democratic countries",
+          "No, only in developed countries",
+          "Yes, universally",
+          "Only in wealthy countries"
+        ],
+        answer: "Yes, universally"
+      }
+    ];
+
+    // Function to shuffle questions
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    // Shuffle questions
+    shuffle(questions);
+
+    let currentQuestionIndex = 0;
+    let correctAnswers = 0;
+
+    function loadQuestion() {
+      const question = questions[currentQuestionIndex];
+      const quizContainer = document.getElementById('quiz');
+      const feedbackContainer = document.getElementById('feedback');
+      const nextButton = document.getElementById('next-button');
+      const finishButton = document.getElementById('finish-button');
+
+      feedbackContainer.textContent = '';
+
+      quizContainer.innerHTML = `
+        <div class="question">${question.question}</div>
+        ${question.options.map((option) => `
+          <a href="#" class="option" data-answer="${option}">${option}</a>
+        `).join('')}
+      `;
+
+      const optionElements = document.querySelectorAll('.option');
+      optionElements.forEach(option => {
+        option.addEventListener('click', function(event) {
+          event.preventDefault();
+          const selectedAnswer = this.dataset.answer;
+          if (selectedAnswer === question.answer) {
+            correctAnswers++;
+            document.getElementById('correct-sound').play();
+            feedbackContainer.textContent = 'Correct!';
+          } else {
+            document.getElementById('error-sound').play();
+            feedbackContainer.textContent = 'Incorrect! The correct answer is: ' + question.answer;
+          }
+          nextButton.style.display = 'block';
+          optionElements.forEach(opt => opt.style.pointerEvents = 'none');
+          if (currentQuestionIndex === questions.length - 1) {
+            finishButton.style.display = 'block';
+            nextButton.style.display = 'none';
+          }
+        });
+      });
+    }
+
+    function showResults() {
+      const resultContainer = document.getElementById('result');
+      resultContainer.innerHTML = `
+        You got ${correctAnswers} out of ${questions.length} questions right!<br>
+      `;
+      if (correctAnswers === questions.length) {
+        document.getElementById('victory-sound').play();
+        resultContainer.innerHTML += "Congratulations! You got all the questions right!";
+      } else {
+        document.getElementById('over-sound').play();
+        resultContainer.innerHTML += "Try again!";
+      }
+      document.getElementById('quiz').innerHTML = '';
+      document.getElementById('feedback').textContent = '';
+    }
+
+    document.getElementById('next-button').addEventListener('click', function() {
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) {
+        loadQuestion();
+      }
+      if (currentQuestionIndex === questions.length - 1) {
+        this.style.display = 'none';
+        document.getElementById('finish-button').style.display = 'block';
+      }
+    });
+
+    document.getElementById('finish-button').addEventListener('click', function() {
+      showResults();
+    });
+
+    loadQuestion();
+  </script>
+</body>
+</html>
